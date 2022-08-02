@@ -17,9 +17,13 @@ class Pila:
     #4.- Sacar el último Tema
     def last(self):
         return self.pila[1]
-    
+
+    #metodo para mostrar el tema que se esta reproduciendo
     def current(self):
-        return self.pila[0]
+        if len(self.pila) >0:
+            return self.pila[0]
+        else:
+            return "No hay temas a reproducir, ingrese un nuevo tema"
     
     #5.- Ordenar por nombre
     def order(self):
@@ -27,7 +31,10 @@ class Pila:
     
     #6.- Eliminar a un tema específico
     def delete(self, tema):
-        self.pila.remove(tema)
+        for i in self.pila:
+            if tema==i:
+                self.pila.remove(tema)
+                break
     
     #7.- Ver la lista de reproducción
     def show(self):
@@ -37,7 +44,7 @@ class Pila:
     #8.-Puede Añadir un tema de forma directa en una 
     # posición dentro la pila sin alterar su
     # comportamiento
-    def addDirect(self, tema,posicion):
+    def addDirect(self, posicion,tema):
         self.pila.insert(posicion, tema)
 
 
@@ -50,6 +57,7 @@ def menu():
     opcion=1
 
     while opcion!=0:
+        print("\tSe esta reproduciendo ",reproductor.current(),".......")
         print("╔═════════════════════════════════════╗") 
         print("║              REPRODUCTOR            ║")
         print("╠═════════════════════════════════════╣")
@@ -67,25 +75,37 @@ def menu():
         if opcion==1:
             tema=input("\tIngrese el título del tema: ")
             reproductor.addNew(tema)
+        
         elif opcion==2:
             reproductor.remove()
+            print("\t\t¡Lista de reproducciòn borrada!")
+        
         elif opcion==3:
             tema=input("\tIngrese el título del tema: ")
             reproductor.push(tema)
+        
         elif opcion==4:
             print("\tSe esta reproduciendo ",reproductor.current(),".......")
             print("El siguiente a reproducir es", reproductor.last())
+        
         elif opcion==5:
             reproductor.order()
             print("\t¡ Se ha ordenado correctamente !")
+        
         elif opcion==6:
             tema=input("\tIngrese el título del tema que desea quitar de la lista: ")
             reproductor.delete(tema)
+        
         elif opcion==7:
             print("\tLista de reproducción actual")
             reproductor.show()
+        
         elif opcion==8:
             posicion=int(input("\tIngrese la posición en la desea ingresar el tema: "))
             tema=input("\tIngrese el título del tema: ")
             reproductor.addDirect(posicion,tema)
+        else:
+            print("Opcion Incorrecta!!!")
+    else:
+        print("Saliendo del Programa...")
 menu()
